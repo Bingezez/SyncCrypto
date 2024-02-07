@@ -4,3 +4,5 @@ client
 clients
 server
 venv
+
+*.pyc
