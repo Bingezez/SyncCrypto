@@ -12,4 +12,3 @@ def user(token):
 
 if __name__ == '__main__':
     print(user('c04b2264657614d582de7bda2db5f8aaf8c42f52c37bcea0ee8262ea'))
-д

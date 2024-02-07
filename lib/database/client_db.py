@@ -2,7 +2,6 @@ from .sql_lib import Sql
 
 
 class RegisterNewClient:
-    _name_table = 'clients'
     '''
     id: int - autoincrement
     username: str - not null - client username
@@ -10,6 +9,8 @@ class RegisterNewClient:
     path: str - not null - path to client folder
     friend_list: str - not null - list of friends 
     '''
+
+    _name_table = 'clients'
     _name_columns = '(id INTEGER PRIMARY KEY AUTOINCREMENT,' \
                     'username TEXT NOT NULL,' \
                     'password TEXT NOT NULL,' \
@@ -30,14 +31,15 @@ class RegisterNewClient:
         self._sql.commit()
 
     def get_client_by_username(self, username):
-        return self._sql.query(f'''SELECT * FROM {self._name_table}
+        try :
+            return self._sql.query(f'''SELECT * FROM {self._name_table}
                             WHERE username = ?''', (username,))[0]
-
+        except IndexError:
+            pass
+        
     def get_all_clients(self):
         return self._sql.query(f'''SELECT * FROM {self._name_table}''')
 
 
 if __name__ == '__main__':
-    name_database = 'client_register.db'
-    # path_database = './data'
     pass

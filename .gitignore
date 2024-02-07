@@ -1,4 +1,6 @@
-/client
-/clients
-/server
-/__pycache__
+__pycache__/
+
+client
+clients
+server
+venv
