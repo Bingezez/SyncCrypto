@@ -1,3 +1,5 @@
+from getpass import getpass
+
 from lib.stream import GlobalStreamData
 
 
@@ -7,8 +9,12 @@ class Login(GlobalStreamData):
 
     async def login(self):
         username = input('Username: ')
-        password = input('Password: ')
+        password = getpass('Password: ')
         self.data = {'username': username,
                      'password': password}
         self.action = 'login'
+        await self.transfer_data()
+    
+    async def logout(self):
+        self.action = 'logout'
         await self.transfer_data()

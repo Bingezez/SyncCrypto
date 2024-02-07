@@ -45,6 +45,13 @@ class _Transfer(_StreamData):
             'status': self.status,
             'message': self.message
         })
+        print({
+            'data': self.data,
+            'action': self.action,
+            'status': self.status,
+            'message': self.message
+        })
+
 
 
 class _Reader(_StreamData):

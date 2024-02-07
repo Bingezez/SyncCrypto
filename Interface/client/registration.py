@@ -1,3 +1,5 @@
+from getpass import getpass
+
 from lib.stream import GlobalStreamData
 
 
@@ -8,12 +10,12 @@ class Registration(GlobalStreamData):
     async def register(self):
         username = input('Username: ')
         while True:
-            password = input('Password: ')
-            if password == input('Confirm password: '):
+            password = getpass('Password: ')
+            if password == getpass('Repeat password: '):
                 break
             print('Password not match')
 
         self.data = {'username': username,
                      'password': password}
-        self.action = 'registation'
+        self.action = 'registration'
         await self.transfer_data()

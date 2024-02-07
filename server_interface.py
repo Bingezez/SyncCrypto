@@ -17,6 +17,9 @@ class Interface(GlobalStreamData):
         login = Login(self.reader, self.writer, self._db)
         await login.login(self.data)
         return login.status
+    
+    async def logout(self):
+        await Login(self.reader, self.writer, self._db).logout()
 
     async def registration(self):
         registration = Registration(self.reader, self.writer, self._db)
@@ -61,14 +64,17 @@ class Interface(GlobalStreamData):
                 if await self.login() == 'success':
                     break
 
-            if self.action == 'registation':
+            if self.action == 'registration':
                 await self.registration()
 
     async def main(self):
         await self.auth_client()
         while True:
             await self.read_data()
-            if self.action == 'new_note':
+            if self.action == 'logout':
+                await self.logout()
+                await self.auth_client()
+            elif self.action == 'new_note':
                 await self.new_note(self.data)
             elif self.action == 'get_all_notes':
                 await self.get_all_notes(self.data)

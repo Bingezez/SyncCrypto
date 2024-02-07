@@ -26,6 +26,7 @@ class Login(GlobalStreamData):
         username = data['username']
         password = data['password']
         self.action = 'token'
+        self.message = ''
         try:
             if self._db.get_client_by_username(username)[2] == password:
                 self.status = 'success'
@@ -36,4 +37,8 @@ class Login(GlobalStreamData):
 
         await self.create_token(data)
         self.data = {'token': self._token}
+        await self.transfer_data()
+    
+    async def logout(self):
+        self.action = 'logout'
         await self.transfer_data()

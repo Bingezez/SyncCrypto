@@ -13,8 +13,8 @@ class Server:
             self.host,
             self.port
         )
-        async with self.server:
-            await self.server.serve_forever()
+        
+        await self.server.serve_forever()
 
     async def handle_client(self, reader, writer):
         """main loop for handling client"""

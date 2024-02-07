@@ -54,4 +54,5 @@ if __name__ == '__main__':
         with Server(conf['host'], conf['port']) as server:
             pass
     except KeyboardInterrupt:
+        print('Server stopped')
         pass

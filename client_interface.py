@@ -22,7 +22,8 @@ class Interface(GlobalStreamData):
         print('[1]. Create new note\n'
               '[2]. Action with note\n'  # read/edit/delete/show all notes
               '[3]. Sync notes \n'
-              '[4]. Exit\n')
+              '[4]. Logout\n'
+              '[5]. Exit\n')
 
     async def error_ops(self):
         print('Wrong action')
@@ -38,11 +39,15 @@ class Interface(GlobalStreamData):
         ops = {'1': self.new_note,
                '2': self.action_with_note,
                '3': self.sync_notes,
-               '4': self.close}
+               '4': self.logout,
+               '5': self.close}
         await ops.get(choose_ops, self.error_ops)()
 
     async def login(self):
         await Login(self.reader, self.writer).login()
+
+    async def logout(self):
+        await Login(self.reader, self.writer).logout()
 
     async def registration(self):
         await Registration(self.reader, self.writer) \
@@ -65,14 +70,18 @@ class Interface(GlobalStreamData):
     async def base_action(self):
         while True:
             await self.print_menu()
+
             act = input('Choose action: ')
             await self.perform_ops_menu(act)
             await self.read_data()
+
             if self.status == 'error':
                 print(self.message)
                 continue
+
             if self.status == 'success':
                 print(self.message)
+
             if self.action == 'token':
                 await self.save_token()
                 break
@@ -85,6 +94,10 @@ class Interface(GlobalStreamData):
             await self.perform_ops_menu_user(act)
             
             await self.read_data()
+
+            if self.action == 'logout':
+                await self.logout()
+                await self.base_action()
 
             if self.message is None:
                 continue
